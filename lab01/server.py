@@ -11,5 +11,8 @@ while True:
 	print 'Got connection from', addr
 	c.send('Thank you for connecting')
 	print c.recv(1024)
-	x = raw_input("")
+	message = raw_input("Teste Server")
+	c.send(message)
+	c.send("Encerrado Server")
+	print c.recv(1024)
 	c.close()
