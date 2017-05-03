@@ -1,0 +1,46 @@
+public class ThreadMonitor extends Thread {
+	public static String mensagem = "ashdhIDVGIGDidgvHDVGdvgDVGduiDKLVGdhvgUIDGYdgLHDGVhdvgbVGDHDLBLÇDKJLDKbgjdgLDldbgDHBjkldbgBVHbvhdbvHJDBVHJbvdjkDKLdlhLDHhdbHKDBVHldlDLKbgdhDBjksbghjSBGHJBGSHBDHBDB";
+	public static ThreadMonitor[] listThreads = new ThreadMonitor[30];
+	public static int i=0;
+	
+	public static void main(String args[]) throws InterruptedException{
+		for(int i=0;i<30;i++){
+			listThreads[i] = new ThreadMonitor();
+		}
+		
+		listThreads[0].start();	
+	}
+	
+	public void run(){
+		while(true){
+			String in=null;
+			String fim=null;
+			char c;
+			System.out.println(mensagem);
+			for(int i=0;i<mensagem.length();i++){
+				c = mensagem.charAt(i);
+				if(Character.isLowerCase(c)){
+					in = mensagem.substring(0,i);
+					fim = mensagem.substring(i+1);
+					mensagem = in + Character.toUpperCase(c) + fim;
+					break;
+				}
+			}
+	
+			if(fim == null){
+					
+				System.out.println(mensagem);
+				return;
+			}
+			
+			i = (i + 1) % 30;
+			if(listThreads[i].isAlive())
+				listThreads[i].interrupt();
+			else
+				listThreads[i].start();
+			
+			try{ Thread.sleep(Long.MAX_VALUE); }
+			catch(Exception e){}
+		}
+	}
+}
